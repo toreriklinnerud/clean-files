@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby 
 # == Synopsis
 # 
-# Executable which delete files which fit certain criteria. 
+# Executable which delete files fitting criteria. 
 # 
 # The intended purpose is to delete backups older than a certain date,
 # whilst keeping daily, weekly or monthly versions.

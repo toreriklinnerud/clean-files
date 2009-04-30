@@ -1,6 +1,6 @@
 == Synopsis
 
-Executable to delete files which fitting certain criteria. 
+Executable to delete files fitting certain criteria. 
 
 The intended purpose is to delete backups older than a certain date,
 whilst keeping daily, weekly or monthly versions.
@@ -24,7 +24,7 @@ For help use: clean-files -h
                     Ruby Time object. ActiveSupport time helpers can be used. 
                     For example: 
 
-                    -t=10.days.ago or -t= 2.months.ago
+                   -t 10.days.ago or --threshold=2.months.ago
                 
   -h, --hourly      Keep hourly hourly
   -d, --daily       Keep daily backups
