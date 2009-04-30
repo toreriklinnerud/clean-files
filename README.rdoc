@@ -1,7 +1,39 @@
-= clean-files
+== Synopsis
 
-Description goes here.
+Executable to delete files which fitting certain criteria. 
+
+The intended purpose is to delete backups older than a certain date,
+whilst keeping daily, weekly or monthly versions.
+
+The executable does not itself create any backups, it is only 
+intended for cleaning up existing ones.
+
+== Usage
+
+clean-files directory_path [options]
+
+For help use: clean-files -h
+== Options
+
+  -v, --verbose     Print name of files deleted
+  -d, --dry-run     Implies -v, only prints what files would have been deleted
+  -t, --threshold   Treshold date for when to start deleting files.
+                    No files newer than this date is deleted.
+                 
+                    The argument is evaluated as Ruby, so it has to produce a valid 
+                    Ruby Time object. ActiveSupport time helpers can be used. 
+                    For example: 
+
+                    -t=10.days.ago or -t= 2.months.ago
+                
+  -h, --hourly      Keep hourly hourly
+  -d, --daily       Keep daily backups
+  -w, --weekly      Keep weekly backups
+  -m, --monthly     Keep monthly backups
+  -y, --yearly      Keep yearly backups 
+
+  -r, --recursive   Delete recursively into subdirectories
 
 == Copyright
 
-Copyright (c) 2009 Tor Erik Linnerud. See LICENSE for details.
+Copyright (c) 2009 AlphaSights Ltd. See LICENSE for details.

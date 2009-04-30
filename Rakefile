@@ -5,9 +5,9 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "clean-files"
-    gem.summary = %Q{TODO}
-    gem.email = "tel@jklm.no"
-    gem.homepage = "http://github.com/toreriklinerud/clean-files"
+    gem.summary = 'Executable to delete files which fit certain criteria'
+    gem.email = "torerik.linnerud@alphasights.com"
+    gem.homepage = "http://github.com/alphasights/clean-files"
     gem.authors = ["Tor Erik Linnerud"]
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
