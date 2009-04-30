@@ -10,15 +10,15 @@ intended for cleaning up existing ones.
 
 == Usage
 
-clean-files directory_path [options]
+  clean-files directory_path [options]
 
 For help use: clean-files -h
 == Options
 
   -v, --verbose     Print name of files deleted
   -d, --dry-run     Implies -v, only prints what files would have been deleted
-  -t, --threshold   Treshold date for when to start deleting files.
-                    No files newer than this date is deleted.
+  -t, --threshold   Threshold date for when to start deleting files.
+                    No files newer than this date is deleted. The default is 1 month.
                  
                     The argument is evaluated as Ruby, so it has to produce a valid 
                     Ruby Time object. ActiveSupport time helpers can be used. 
@@ -26,11 +26,11 @@ For help use: clean-files -h
 
                    -t 10.days.ago or --threshold=2.months.ago
                 
-  -h, --hourly      Keep hourly hourly
-  -d, --daily       Keep daily backups
-  -w, --weekly      Keep weekly backups
-  -m, --monthly     Keep monthly backups
-  -y, --yearly      Keep yearly backups 
+  -h, --hourly      Keep hourly files
+  -d, --daily       Keep daily files
+  -w, --weekly      Keep weekly files
+  -m, --monthly     Keep monthly files
+  -y, --yearly      Keep yearly files
 
   -r, --recursive   Delete recursively into subdirectories
 
