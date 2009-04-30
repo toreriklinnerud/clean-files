@@ -1,0 +1,7 @@
+= clean-files
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Tor Erik Linnerud. See LICENSE for details.
