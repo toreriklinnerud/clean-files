@@ -9,38 +9,40 @@ describe Cleaner do
   end
   
   it 'preserves the first file of the hour' do
-    cleaner = Cleaner.new('/path', :hourly => true)
-    files = mock_files('12:05', '12:10', '13:15', '13:16')
-    cleaner.should_receive(:files_before_threshold).and_return(files)
-    cleaner.files_to_preserve.should == mock_files('12:05', '13:15')
+    should_preserve(:hourly, 
+      '12:05' => true, 
+      '12:10' => false,
+      '13:15' => true,
+      '13:16' => false)
   end
   
   it 'preserves the first file of the day' do
-    cleaner = Cleaner.new('/path', :daily => true)
-    files = mock_files('01 10:00', '01 12:00', '02 00:00', '02 00:01')
-    cleaner.should_receive(:files_before_threshold).and_return(files)
-    cleaner.files_to_preserve.should == mock_files('01 10:00', '02 00:00')
+    should_preserve(:daily, 
+      '01 10:00' => true, 
+      '01 12:00' => false, 
+      '02 00:00' => true, 
+      '02 00:01' => false)
   end
   
   it 'preserves the first file of the week' do
-    cleaner = Cleaner.new('/path', :weekly => true)
-    files = mock_files('Sun Jan 02 03:40 00', 'Tue Jan 04 03:40 00', 'Wed Jan 05 03:40 00')
-    cleaner.should_receive(:files_before_threshold).and_return(files)
-    cleaner.files_to_preserve.should == mock_files('Sun Jan 02 03:40 00', 'Tue Jan 04 03:40 00')
+    should_preserve(:weekly,
+      'Sun Jan 02 03:40 00' => true, 
+      'Tue Jan 04 03:40 00' => true, 
+      'Wed Jan 05 03:40 00' => false)
   end
   
   it 'preserves the first file of the month' do
-    cleaner = Cleaner.new('/path', :monthly => true)
-    files = mock_files('Sun Jan 02 12:00 00', 'Tue Feb 01 12:00 00', 'Wed Feb 02 12:00 00')
-    cleaner.should_receive(:files_before_threshold).and_return(files)
-    cleaner.files_to_preserve.should == mock_files('Sun Jan 02 12:00 00', 'Tue Feb 01 12:00 00')
+    should_preserve(:monthly, 
+      'Sun Jan 02 12:00 00' => true, 
+      'Tue Feb 01 12:00 00' => true, 
+      'Wed Feb 02 12:00 00' => false)            
   end
   
   it 'preserves the first file of the year' do
-    cleaner = Cleaner.new('/path', :yearly => true)
-    files = mock_files('Sun Jan 02 03:40 01', 'Tue Jan 04 03:40 02', 'Wed Jan 05 03:40 02')
-    cleaner.should_receive(:files_before_threshold).and_return(files)
-    cleaner.files_to_preserve.should == mock_files('Sun Jan 02 03:40 01', 'Tue Jan 04 03:40 02')
+    should_preserve(:yearly, 
+      'Sun Jan 02 03:40 01' => true, 
+      'Tue Jan 04 03:40 02' => true, 
+      'Wed Jan 05 03:40 02' => false)
   end
   
   MockFile = Struct.new(:ctime) do
@@ -64,7 +66,10 @@ describe Cleaner do
     end
   end
   
-  def should_preserve(values)
-    
+  def should_preserve(interval, files)
+    cleaner = Cleaner.new('/path', interval => true)
+    cleaner.should_receive(:files_before_threshold).and_return(mock_files(*files.keys.sort))
+    expected_files = files.select{|_, select| select == true}.map{|file, _| file}
+    cleaner.files_to_preserve.to_set.should == mock_files(*expected_files).to_set
   end
 end
