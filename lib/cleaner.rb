@@ -1,13 +1,13 @@
 class Cleaner
   
-  attr_reader :path, :options
+  attr_reader :paths, :options
   
   VALID_OPTIONS    = [:threshold, :pretend, :verbose]
   VALID_INTERVALS  = [:hourly, :daily, :weekly, :monthly, :yearly]
   TIME_INTERVALS   = [:hour,   :day,   :cweek, :month, :year]
   
-  def initialize(path, options = {})
-    @path = path
+  def initialize(paths, options = {})
+    @paths = [paths].flatten
     @options = options.reverse_merge(:threshold => 30.days.ago)
     options.assert_valid_keys(VALID_OPTIONS + VALID_INTERVALS)
     given_intervals = VALID_INTERVALS & options.keys
@@ -20,12 +20,11 @@ class Cleaner
   def start
     files = files_to_delete.map(&:path)
     puts files.join("\n") if options[:verbose]
-    FileUtils.rm(files, :noop => !!options[:pretend], :force => true)
+    FileUtils.rm_rf(files, :noop => !!options[:pretend])
   end
   
   def files
-    raise "No such directory: #{path}" unless File.directory?(path)
-    @_files ||= Dir.glob(path + '/*').map do |file_path| 
+    @_files ||= paths.map do |file_path| 
       begin 
         File.new(file_path)
       rescue Errno::EOPNOTSUPP

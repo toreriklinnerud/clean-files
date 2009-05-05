@@ -22,7 +22,7 @@ class CleanFiles
   def run
         
     if parsed_options? && arguments_valid? 
-      Cleaner.new(@options.delete(:path), @options).start
+      Cleaner.new(@options.delete(:paths), @options).start
     else
       output_usage
     end
@@ -49,13 +49,13 @@ class CleanFiles
       end
       return false unless opts.parse!(@arguments)
       
-      @options[:path] = @arguments.pop
+      @options[:paths] = @arguments.dup
 
       true      
     end
 
     def arguments_valid?
-      @arguments.empty? && @options[:path]
+      @options[:paths].present?
     end
     
     def output_help

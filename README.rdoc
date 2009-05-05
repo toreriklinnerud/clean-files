@@ -3,7 +3,7 @@
 Executable to delete files fitting certain criteria. 
 
 The intended purpose is to delete backups older than a certain date,
-whilst keeping daily, weekly or monthly versions.
+whilst keeping hourly, daily or weekly and so on backups.
 
 The executable does not itself create any backups, it is only 
 intended for cleaning up existing ones.
@@ -31,8 +31,6 @@ For help use: clean-files -h
   -w, --weekly      Keep weekly files
   -m, --monthly     Keep monthly files
   -y, --yearly      Keep yearly files
-
-  -r, --recursive   Delete recursively into subdirectories
 
 == Copyright
 

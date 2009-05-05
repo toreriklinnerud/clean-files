@@ -12,7 +12,7 @@ describe Cleaner do
      cleaner = Cleaner.new('/path')
      files = mock_files(3.days.ago, 2.days.ago, 7.days.ago)
      cleaner.should_receive(:files_to_delete).and_return(files)
-     FileUtils.should_receive(:rm).with(files.map(&:path), :noop => false, :force => true)
+     FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => false)
      cleaner.start
   end
   
@@ -20,7 +20,7 @@ describe Cleaner do
      cleaner = Cleaner.new('/path', :pretend => true)
      files = mock_files(3.days.ago, 2.days.ago, 7.days.ago)
      cleaner.should_receive(:files_to_delete).and_return(files)
-     FileUtils.should_receive(:rm).with(files.map(&:path), :noop => true, :force => true)
+     FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => true)
      cleaner.start
   end
   
@@ -35,7 +35,7 @@ describe Cleaner do
      cleaner = Cleaner.new('/path', :verbose => true)
      files = mock_files('00:50', '13:30')
      cleaner.should_receive(:files_to_delete).and_return(files)
-     FileUtils.should_receive(:rm).with(files.map(&:path), :noop => false, :force => true)
+     FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => false)
      cleaner.should_receive(:puts).with("01 May 00:50\n01 May 13:30")
      cleaner.start
   end
