@@ -6,6 +6,10 @@ class Cleaner
   VALID_INTERVALS  = [:hourly, :daily, :weekly, :monthly, :yearly]
   TIME_INTERVALS   = [:hour,   :day,   :cweek, :month, :year]
   
+  SimpleFile = Struct.new(:path, :stat) do 
+    delegate :ctime, :file?, :directory?, :to => :stat
+  end
+  
   def initialize(paths, options = {})
     @paths = [paths].flatten
     @options = options.reverse_merge(:threshold => 30.days.ago)
@@ -24,9 +28,13 @@ class Cleaner
   end
   
   def files
+    if paths.any?{|path| path.include?('*')}
+      paths.map!{|path| Dir.glob(path)}
+      paths.flatten!
+    end
     @_files ||= paths.map do |file_path| 
       begin 
-        File.new(file_path)
+        SimpleFile.new(file_path, File.stat(file_path))
       rescue Errno::EOPNOTSUPP
         nil
       rescue Errno::ENOENT => e
@@ -34,7 +42,7 @@ class Cleaner
         exit -2
       end
     end.compact.select do |file|
-      file.stat.file? || (options[:recursive] && file.stat.directory?)
+      file.file? || (options[:recursive] && file.directory?)
     end.sort_by(&:ctime)
   end
   
