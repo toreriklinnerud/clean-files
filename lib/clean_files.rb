@@ -1,13 +1,12 @@
 require 'optparse' 
 require 'rdoc/usage'
-require 'ostruct'
 require 'active_support'
-require 'date'
+require 'fileutils'
 
 require 'cleaner'
 
 class CleanFiles
-  VERSION = '0.0.1'
+  VERSION = '0.1.0'
   
   attr_reader :options
 
@@ -15,17 +14,15 @@ class CleanFiles
     @arguments = arguments
     
     # Set defaults
-    @options = OpenStruct.new
-    @options.verbose   = false
-    @options.dry_run   = false
-    @options.threshold = 1.month.ago
+    @options = Hash.new
+    @options[:threshold] = 1.month.ago
   end
 
   # Parse options, check arguments, then process the command
   def run
         
     if parsed_options? && arguments_valid? 
-      Cleaner.new(@options.path, @options.marshal_dump).start
+      Cleaner.new(@options.delete(:path), @options).start
     else
       output_usage
     end
@@ -39,20 +36,26 @@ class CleanFiles
       # Specify options
       opts = OptionParser.new 
       opts.on('-h', '--help')       { output_help }
-      opts.on('-v', '--verbose')    { @options.verbose = true }
-      opts.on('-d', '--dry-run')    { @options.verbose = true 
-                                      @options.dry_run = true }
-      opts.on('-t', '--treshold [TIME]')   {|time| @options.threshold = eval(time)}
-            
+      opts.on('-v', '--verbose')    { @options[:verbose] = true }
+      opts.on('-d', '--pretend')    { @options[:pretend] = true 
+                                      @options[:verbose] = true }
+      opts.on('-t', '--treshold [DAYS]')   do |days| 
+        raise OptionParser::InvalidOption unless days.to_i > 0 || days == "0"
+        @options[:threshold] = days.to_i.send(:days).ago
+      end
+      
+      Cleaner::VALID_INTERVALS.each do |interval|
+        opts.on(interval.to_s.first, "--#{interval}") {@options[interval] =  true}
+      end
       return false unless opts.parse!(@arguments)
       
-      @options.path = @arguments.pop
+      @options[:path] = @arguments.pop
 
       true      
     end
 
     def arguments_valid?
-      @arguments.empty? && @options.path
+      @arguments.empty? && @options[:path]
     end
     
     def output_help

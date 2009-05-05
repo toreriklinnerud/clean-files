@@ -16,7 +16,7 @@ For help use: clean-files -h
 == Options
 
   -v, --verbose     Print name of files deleted
-  -d, --dry-run     Implies -v, only prints what files would have been deleted
+  -p, --pretend     Implies -v, only prints what files would have been deleted
   -t, --threshold   Threshold date for when to start deleting files.
                     No files newer than this date is deleted. The default is 1 month.
                  

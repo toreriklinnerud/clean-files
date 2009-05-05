@@ -2,13 +2,14 @@ class Cleaner
   
   attr_reader :path, :options
   
+  VALID_OPTIONS    = [:threshold, :pretend, :verbose]
   VALID_INTERVALS  = [:hourly, :daily, :weekly, :monthly, :yearly]
   TIME_INTERVALS   = [:hour,   :day,   :cweek, :month, :year]
   
-  def initialize(path, options)
+  def initialize(path, options = {})
     @path = path
     @options = options
-    options.assert_valid_keys([:threshold] + VALID_INTERVALS)
+    options.assert_valid_keys(VALID_OPTIONS + VALID_INTERVALS)
     given_intervals = VALID_INTERVALS & options.keys
     if given_intervals.present?
       lowest_selected_position = VALID_INTERVALS.index(given_intervals.first)
@@ -17,15 +18,20 @@ class Cleaner
   end
   
   def start
-    puts 'would delete: '
-    files_before_threshold.each {|file_name| puts file_name}
+    files = files_to_delete.map(&:path)
+    puts files.join("\n") if options[:verbose]
+    FileUtils.rm(files, :noop => !!options[:pretend], :force => true)
   end
   
   def files
     raise "No such directory: #{path}" unless File.directory?(path)
-    Dir.glob(path + '/*') do |file_path| 
+    @_files ||= Dir.glob(path + '/*').map do |file_path| 
       File.new(file_path)
     end.sort_by(&:ctime)
+  end
+  
+  def files_to_delete
+    files_before_threshold - files_to_preserve
   end
   
   def files_before_threshold
