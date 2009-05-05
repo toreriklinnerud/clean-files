@@ -80,7 +80,7 @@ class CleanFiles
       format = "plain"
       
       unless sections.empty?
-        flow = extract_sections(flow, sections)
+        flow = RDoc.extract_sections(flow, sections)
       end
       
       options = RI::Options.instance
