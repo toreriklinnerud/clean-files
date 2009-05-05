@@ -2,7 +2,7 @@ class Cleaner
   
   attr_reader :paths, :options
   
-  VALID_OPTIONS    = [:threshold, :pretend, :verbose]
+  VALID_OPTIONS    = [:threshold, :pretend, :verbose, :recursive]
   VALID_INTERVALS  = [:hourly, :daily, :weekly, :monthly, :yearly]
   TIME_INTERVALS   = [:hour,   :day,   :cweek, :month, :year]
   
@@ -31,7 +31,7 @@ class Cleaner
         nil
       end
     end.compact.select do |file|
-      file.stat.file? || file.stat.directory?
+      file.stat.file? || (options[:recursive] && file.stat.directory?)
     end.sort_by(&:ctime)
   end
   

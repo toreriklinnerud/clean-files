@@ -1,39 +1,46 @@
 #!/usr/bin/env ruby 
 # == Synopsis
 # 
-# Executable which delete files fitting criteria. 
+# Executable to delete files fitting certain criteria. 
 # 
 # The intended purpose is to delete backups older than a certain date,
-# whilst keeping daily, weekly or monthly versions.
+# whilst keeping hourly, daily or weekly and so on backups. 
+# 
+# Specifying an option like --hourly will keep the first file of the hour
+# and delete the rest of the files created within the same hour, 
+# provided that the those files were created before the threshold date.
 # 
 # The executable does not itself create any backups, it is only 
 # intended for cleaning up existing ones.
 # 
 # == Usage
 # 
-#   clean-files directory_path [options]
+#   clean-files file_paths [options]
 # 
 # For help use: clean-files -h
 # == Options
 # 
 #   -v, --verbose     Print name of files deleted
 #   -p, --pretend     Implies -v, only prints what files would have been deleted
-#   -t, --threshold   Threshold date for when to start deleting files.
-#                     No files newer than this date is deleted. 
+#   -r, --recursive   Delete directories as well as files
+#   -t, --threshold   Time ago in days for when to start deleting files
+#                     File newer than this date are never deleted. 
+#                     The default is 30 days.
 #                  
-#                     The argument is evaluated as Ruby, so it has to produce a valid 
-#                     Ruby Time object. ActiveSupport time helpers can be used. 
 #                     For example: 
-#
-#                     -t 10.days.ago or --threshold=2.months.ago
-#                 
-#   -h, --hourly      Keep hourly files
-#   -d, --daily       Keep daily files
-#   -w, --weekly      Keep weekly files
-#   -m, --monthly     Keep monthly files
-#   -y, --yearly      Keep yearly files
 # 
-#   -r, --recursive   Delete recursively into subdirectories
+#                    -t 10 or --threshold=30
+#                 
+#   -H, --hourly      Keep hourly files
+#   -D, --daily       Keep daily files
+#   -W, --weekly      Keep weekly files
+#   -M, --monthly     Keep monthly files
+#   -Y, --yearly      Keep yearly files
+# 
+# == Examples
+# 
+#   clean_files /backups/sql/*.sql --threshold 60 --daily
+#   clean_files /Users/me/Downloads/* --pretend --verbose --recursive -t 10
 # 
 # == Copyright
 # 

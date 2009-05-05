@@ -39,13 +39,15 @@ class CleanFiles
       opts.on('-v', '--verbose')    { @options[:verbose] = true }
       opts.on('-d', '--pretend')    { @options[:pretend] = true 
                                       @options[:verbose] = true }
+      opts.on('-r', '--recursive')  {@options[:recursive] = true }
+      
       opts.on('-t', '--treshold [DAYS]')   do |days| 
         raise OptionParser::InvalidOption unless days.to_i > 0 || days == "0"
         @options[:threshold] = days.to_i.send(:days).ago
       end
       
       Cleaner::VALID_INTERVALS.each do |interval|
-        opts.on(interval.to_s.first, "--#{interval}") {@options[interval] =  true}
+        opts.on("-#{interval.to_s.first.upcase}", "--#{interval}") {@options[interval] =  true}
       end
       return false unless opts.parse!(@arguments)
       
