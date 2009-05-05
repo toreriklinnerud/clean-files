@@ -59,7 +59,6 @@ class CleanFiles
     end
     
     def output_help
-      output_version
       RDoc::usage()
     end
     

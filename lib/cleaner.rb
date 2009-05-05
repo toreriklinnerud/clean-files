@@ -8,7 +8,7 @@ class Cleaner
   
   def initialize(path, options = {})
     @path = path
-    @options = options
+    @options = options.reverse_merge(:threshold => 30.days.ago)
     options.assert_valid_keys(VALID_OPTIONS + VALID_INTERVALS)
     given_intervals = VALID_INTERVALS & options.keys
     if given_intervals.present?
@@ -26,7 +26,13 @@ class Cleaner
   def files
     raise "No such directory: #{path}" unless File.directory?(path)
     @_files ||= Dir.glob(path + '/*').map do |file_path| 
-      File.new(file_path)
+      begin 
+        File.new(file_path)
+      rescue Errno::EOPNOTSUPP
+        nil
+      end
+    end.compact.select do |file|
+      file.stat.file? || file.stat.directory?
     end.sort_by(&:ctime)
   end
   
@@ -35,11 +41,11 @@ class Cleaner
   end
   
   def files_before_threshold
-    files.delete_if{|file| file.ctime >= options[:threshold]}
+    files.select{|file| file.ctime < options[:threshold]}
   end
   
   def files_to_preserve
-    return files_before_threshold if @key_intervals.nil?
+    return [] if @key_intervals.nil?
     files_before_threshold.group_by do |file|
       cdate = file.ctime.to_datetime
       @key_intervals.map{|interval| cdate.send(interval)}

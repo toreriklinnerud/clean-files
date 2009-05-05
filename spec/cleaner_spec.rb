@@ -86,6 +86,14 @@ describe Cleaner do
       ctime.to_s(:short)
     end
     
+    def stat
+      stat = Object.new
+      def stat.file?
+        true
+      end
+      stat
+    end
+    
     alias path inspect
   end
 
