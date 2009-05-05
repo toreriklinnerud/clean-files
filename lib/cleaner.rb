@@ -29,6 +29,9 @@ class Cleaner
         File.new(file_path)
       rescue Errno::EOPNOTSUPP
         nil
+      rescue Errno::ENOENT => e
+        puts e.to_s
+        exit -2
       end
     end.compact.select do |file|
       file.stat.file? || (options[:recursive] && file.stat.directory?)
