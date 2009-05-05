@@ -7,8 +7,9 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tor Erik Linnerud"]
   s.date = %q{2009-05-05}
+  s.default_executable = %q{clean_files}
   s.email = %q{torerik.linnerud@alphasights.com}
-  s.executables = ["clean_files", "clean_files"]
+  s.executables = ["clean_files"]
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc"
@@ -36,11 +37,11 @@ Gem::Specification.new do |s|
     s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 2.3.2"])
     else
-      s.add_dependency(%q<activesupport>, [">= 0"])
+      s.add_dependency(%q<activesupport>, [">= 2.3.2"])
     end
   else
-    s.add_dependency(%q<activesupport>, [">= 0"])
+    s.add_dependency(%q<activesupport>, [">= 2.3.2"])
   end
 end

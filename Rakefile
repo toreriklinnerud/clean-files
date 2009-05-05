@@ -9,9 +9,8 @@ begin
     gem.email = "torerik.linnerud@alphasights.com"
     gem.homepage = "http://github.com/alphasights/clean-files"
     gem.authors = ["Tor Erik Linnerud"]
-    gem.executables << 'clean_files'
     gem.files =  FileList["{lib,bin,spec}/*"]
-    gem.add_dependency 'activesupport'
+    gem.add_dependency 'activesupport', ">=2.3.2"
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
