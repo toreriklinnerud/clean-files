@@ -100,7 +100,7 @@ describe Cleaner do
   def mock_files(*ctimes)
     ctimes.map do |ctime|
       if ctime.is_a?(String)
-        ctime = "1 #{ctime}" unless ctime =~ /\d\d /
+        ctime = "1 May #{ctime}" unless ctime =~ /\d\d /
         ctime = "May #{ctime} 2009" unless ctime =~  /\d{2}/
         ctime = Time.parse(ctime)
       end
