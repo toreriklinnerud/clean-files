@@ -16,7 +16,9 @@ Gem::Specification.new do |s|
   s.homepage                  = "http://github.com/alphasights/clean_files"
   s.require_paths             = ["lib"]
   s.summary                   = "Executable to delete files which fit certain criteria"
+  s.description               = "Executable to delete files which fit certain criteria e.g. you can delete files older than 1 month keeping one weekly file"
   s.test_files                = s.files.grep(%r{^(test|spec|features)/})
+  s.license                   = 'MIT'
 
   s.add_dependency 'rake'
   s.add_dependency 'rspec'
