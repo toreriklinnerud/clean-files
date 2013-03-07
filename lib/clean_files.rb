@@ -5,8 +5,6 @@ require 'fileutils'
 require 'cleaner'
 
 class CleanFiles
-  VERSION = '0.1.0'
-
   attr_reader :options
 
   def initialize(arguments)
