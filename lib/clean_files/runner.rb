@@ -69,21 +69,10 @@ module CleanFiles
       end
 
       def rdoc(*sections)
-        readme_path = File.join(File.dirname(__FILE__), '/../README.rdoc')
+        readme_path = File.join(File.dirname(__FILE__), '/../../README.rdoc')
         comment = File.read(readme_path)
 
-        markup = SM::SimpleMarkup.new
-        flow_convertor = SM::ToFlow.new
-        flow = markup.convert(comment, flow_convertor)
-
-        unless sections.empty?
-          flow = RDoc.extract_sections(flow, sections)
-        end
-
-        options = RI::Options.instance
-
-        formatter = options.formatter.new(options, "")
-        formatter.display_flow(flow)
+        puts comment.gsub(/.*Usage/m, '')
       end
 
   end
