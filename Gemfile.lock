@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clean-files (1.0.1)
+    clean_files (1.0.1)
       activesupport
       rake
       rdoc
@@ -31,4 +31,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  clean-files!
+  clean_files!
