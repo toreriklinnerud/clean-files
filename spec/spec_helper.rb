@@ -6,5 +6,5 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'clean_files'
 
 Spec::Runner.configure do |config|
-  
+
 end
