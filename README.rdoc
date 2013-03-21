@@ -1,35 +1,35 @@
 == Synopsis
 
-Executable to delete files fitting certain criteria. 
+Executable to delete files fitting certain criteria.
 
 The intended purpose is to delete backups older than a certain date,
-whilst keeping hourly, daily or weekly and so on backups. 
+whilst keeping hourly, daily or weekly and so on backups.
 
 Specifying an option like --hourly will keep the first file of the hour
-and delete the rest of the files created within the same hour, 
+and delete the rest of the files created within the same hour,
 provided that the those files were created before the threshold date.
 
-The executable does not itself create any backups, it is only 
+The executable does not itself create any backups, it is only
 intended for cleaning up existing ones.
 
 == Usage
 
-  clean-files file_paths [options]
+  clean_files file_paths [options]
 
-For help use: clean-files -h
+For help use: clean_files -h
 == Options
 
   -v, --verbose     Print name of files deleted
   -p, --pretend     Implies -v, only prints what files would have been deleted
   -r, --recursive   Delete directories as well as files
   -t, --threshold   Time ago in days for when to start deleting files
-                    File newer than this date are never deleted. 
+                    File newer than this date are never deleted.
                     The default is 30 days.
-                 
-                    For example: 
+
+                    For example:
 
                    -t 10 or --threshold=30
-                
+
   -H, --hourly      Keep hourly files
   -D, --daily       Keep daily files
   -W, --weekly      Keep weekly files

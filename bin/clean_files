@@ -1,6 +1,6 @@
-#!/usr/bin/env ruby 
+#!/usr/bin/env ruby
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
-require 'clean_files'
+require 'clean_files/runner'
 
-app = CleanFiles.new(ARGV)
+app = CleanFiles::Runner.new(ARGV)
 app.run
