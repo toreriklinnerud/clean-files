@@ -5,39 +5,39 @@ module CleanFiles
 
     it 'find files older than threshold' do
       cleaner = Cleaner.new('/path', :threshold => 5.days.ago)
-      cleaner.should_receive(:files).and_return(mock_files(7.days.ago, 4.days.ago))
-      cleaner.files_before_threshold.should == mock_files(7.days.ago)
+      expect(cleaner).to receive(:files).and_return(mock_files(7.days.ago, 4.days.ago))
+      expect(cleaner.files_before_threshold).to eq(mock_files(7.days.ago))
     end
 
     it 'deletes files' do
        cleaner = Cleaner.new('/path')
        files = mock_files(3.days.ago, 2.days.ago, 7.days.ago)
-       cleaner.should_receive(:files_to_delete).and_return(files)
-       FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => false)
+       expect(cleaner).to receive(:files_to_delete).and_return(files)
+       expect(FileUtils).to receive(:rm_rf).with(files.map(&:path), :noop => false)
        cleaner.start
     end
 
     it 'does not delete any files if specifying pretend => true' do
        cleaner = Cleaner.new('/path', :pretend => true)
        files = mock_files(3.days.ago, 2.days.ago, 7.days.ago)
-       cleaner.should_receive(:files_to_delete).and_return(files)
-       FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => true)
+       expect(cleaner).to receive(:files_to_delete).and_return(files)
+       expect(FileUtils).to receive(:rm_rf).with(files.map(&:path), :noop => true)
        cleaner.start
     end
 
     it 'has has files to delete' do
       cleaner = Cleaner.new('/path')
-      cleaner.should_receive(:files_before_threshold).and_return(mock_files('12:00', '13:00'))
-      cleaner.should_receive(:files_to_preserve).and_return(mock_files('13:00'))
-      cleaner.files_to_delete.should == mock_files('12:00')
+      expect(cleaner).to receive(:files_before_threshold).and_return(mock_files('12:00', '13:00'))
+      expect(cleaner).to receive(:files_to_preserve).and_return(mock_files('13:00'))
+      expect(cleaner.files_to_delete).to eq(mock_files('12:00'))
     end
 
     it 'prints name of file to be deleted if specifying verbose => true' do
        cleaner = Cleaner.new('/path', :verbose => true)
        files = mock_files('00:50', '13:30')
-       cleaner.should_receive(:files_to_delete).and_return(files)
-       FileUtils.should_receive(:rm_rf).with(files.map(&:path), :noop => false)
-       cleaner.should_receive(:puts).with("01 May 00:50\n01 May 13:30")
+       expect(cleaner).to receive(:files_to_delete).and_return(files)
+       expect(FileUtils).to receive(:rm_rf).with(files.map(&:path), :noop => false)
+       expect(cleaner).to receive(:puts).with("01 May 00:50\n01 May 13:30")
        cleaner.start
     end
 
@@ -111,9 +111,9 @@ module CleanFiles
 
     def should_preserve(interval, files)
       cleaner = Cleaner.new('/path', interval => true)
-      cleaner.should_receive(:files_before_threshold).and_return(mock_files(*files.keys.sort))
+      expect(cleaner).to receive(:files_before_threshold).and_return(mock_files(*files.keys.sort))
       expected_files = files.select{|_, select| select == true}.map{|file, _| file}
-      cleaner.files_to_preserve.to_set.should == mock_files(*expected_files).to_set
+      expect(cleaner.files_to_preserve.to_set).to eq(mock_files(*expected_files).to_set)
     end
   end
 end
