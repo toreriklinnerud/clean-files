@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/toreriklinnerud/clean-files/tree/master.svg?style=svg)](https://circleci.com/gh/toreriklinnerud/clean-files/tree/master)
+
 == Synopsis
 
 Executable to delete files fitting certain criteria.
