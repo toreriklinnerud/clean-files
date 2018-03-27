@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    clean_files (1.1.1)
-      activesupport
+    clean_files (1.2.1)
+      activesupport (~> 5)
 
 GEM
   remote: https://rubygems.org/
@@ -17,8 +17,6 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
-    rake (12.3.1)
-    rdoc (6.0.3)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -41,9 +39,7 @@ PLATFORMS
 
 DEPENDENCIES
   clean_files!
-  rake
-  rdoc
-  rspec
+  rspec (~> 3)
 
 BUNDLED WITH
    1.16.1

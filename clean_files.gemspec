@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
 
   s.add_development_dependency 'rspec', '~> 3'
+  s.add_runtime_dependency 'activesupport', '~> 5'
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = [
