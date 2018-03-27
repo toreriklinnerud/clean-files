@@ -2,13 +2,13 @@
 
 Gem::Specification.new do |s|
   s.name = "clean_files"
-  s.version = "1.1.1"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tor Erik Linnerud"]
   s.date = "2009-05-05"
   s.default_executable = "clean_files"
-  s.email = "torerik.linnerud@alphasights.com"
+  s.email = "tel@jklm.no"
   s.files = `git ls-files`.split($/)
   s.executables = s.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   s.test_files = s.files.grep(%r{^(test|spec|features)/})
@@ -20,10 +20,7 @@ Gem::Specification.new do |s|
   s.test_files = s.files.grep(%r{^(test|spec|features)/})
   s.license = 'MIT'
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rdoc'
-  s.add_runtime_dependency 'activesupport'
+  s.add_development_dependency 'rspec', '~> 3'
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = [
