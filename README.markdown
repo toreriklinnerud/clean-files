@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/toreriklinnerud/clean-files/tree/master.svg?style=svg)](https://circleci.com/gh/toreriklinnerud/clean-files/tree/master)
 
-== Synopsis
+## Synopsis
 
 Executable to delete files fitting certain criteria.
 
@@ -14,12 +14,12 @@ provided that the those files were created before the threshold date.
 The executable does not itself create any backups, it is only
 intended for cleaning up existing ones.
 
-== Usage
+## Usage
 
   clean_files file_paths [options]
 
 For help use: clean_files -h
-== Options
+## Options
 
   -v, --verbose     Print name of files deleted
   -p, --pretend     Implies -v, only prints what files would have been deleted
@@ -38,11 +38,11 @@ For help use: clean_files -h
   -M, --monthly     Keep monthly files
   -Y, --yearly      Keep yearly files
 
-== Examples
+## Examples
 
   clean_files /backups/sql/*.sql --threshold 60 --daily
   clean_files /Users/me/Downloads/* --pretend --verbose --recursive -t 10
 
-== Copyright
+## Copyright
 
 Copyright (c) 2009 AlphaSights Ltd. See LICENSE for details.
