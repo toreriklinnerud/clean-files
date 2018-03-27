@@ -16,11 +16,15 @@ intended for cleaning up existing ones.
 
 ## Usage
 
+```
   clean_files file_paths [options]
+```
 
-For help use: clean_files -h
+For help use: `clean_files -h`
+
 ## Options
 
+```bash
   -v, --verbose     Print name of files deleted
   -p, --pretend     Implies -v, only prints what files would have been deleted
   -r, --recursive   Delete directories as well as files
@@ -37,11 +41,14 @@ For help use: clean_files -h
   -W, --weekly      Keep weekly files
   -M, --monthly     Keep monthly files
   -Y, --yearly      Keep yearly files
+```
 
 ## Examples
 
+```bash
   clean_files /backups/sql/*.sql --threshold 60 --daily
   clean_files /Users/me/Downloads/* --pretend --verbose --recursive -t 10
+```
 
 ## Copyright
 
